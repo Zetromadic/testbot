@@ -241,8 +241,39 @@ client.on('message', message=> {
                 }else{
                     message.reply("That user isn\'t in this guild")
                 }
+                
 
         }
+        break;
+
+        case 'mute':
+
+            if (message.member.hasPermission("ADMINISTRATOR")){
+                let person = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[2]))
+                if(!person) return message.reply("Member not in server!");
+
+                let mainrole = message.guild.roles.cache.find(role => role.name === "MEMBER");
+                let muterole = message.guild.roles.cache.find(role => role.name === "MUTED");
+
+                if(!muterole) return message.reply("No mute role!");
+
+                let time = args[2];
+
+                if(!time){
+                    return message.reply("No time!");
+                }
+
+                person.removeRole(mainrole.id);
+                person.addRole(muterole.id);
+
+                message.channel.send(`@${person.user.tag} has been muted for ${ms(ms(time))}`);
+
+                setTimeout(function(){
+                    person.addRole(mainrole.id);
+                    person.removeRole(muterole.id);
+                    message.channel.send(`@${person.user.tag} has been unmuted!`)
+                }, ms(time));
+            }
         break;
 
     }

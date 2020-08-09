@@ -263,14 +263,14 @@ client.on('message', message=> {
                     return message.reply("No time!");
                 }
 
-                person.removeRole(mainrole.id);
-                person.addRole(muterole.id);
+                person.roles.remove(mainrole.id)
+                person.roles.add(muterole.id);
 
                 message.channel.send(`@${person.user.tag} has been muted for ${ms(ms(time))}`);
 
                 setTimeout(function(){
-                    person.addRole(mainrole.id);
-                    person.removeRole(muterole.id);
+                    person.roles.add(mainrole.id)
+                    person.roles.remove(muterole.id);
                     message.channel.send(`@${person.user.tag} has been unmuted!`)
                 }, ms(time));
             }

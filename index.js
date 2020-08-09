@@ -130,7 +130,7 @@ client.on('message', message=> {
                 .addField('Time', message.createdAt)
                 .addField('Reason', wreason);
     
-                var reportschannel = client.channels.cache.find(channel => channel.id === '692858237292249148');
+                var reportschannel = client.channels.cache.find(channel => channel.id === '742053909484404798');
                 reportschannel.send(warnEmbed);
                 message.guild.member(wUser).send(warnEmbed);
 
